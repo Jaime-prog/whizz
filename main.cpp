@@ -83,6 +83,46 @@ vector<int> findPalindrome(string text)
     return palindrome;
 }
 
+// function to find longest palindrome in string using Manacher's algorithm
+vector<int> findLongestPalindrome(string text)
+{
+    string s = "$#";
+    for (int i = 0; i < text.size(); i++)
+    {
+        s += text[i];
+        s += "#";
+    }
+    vector<int> p(s.size(), 0);
+    int id = 0;
+    int mx = 0;
+    int resId = 0;
+    int resMx = 0;
+    for (int i = 1; i < s.size(); i++)
+    {
+        p[i] = mx > i ? min(p[2 * id - i], mx - i) : 1;
+        while (s[i + p[i]] == s[i - p[i]])
+        {
+            p[i]++;
+        }
+        if (mx < i + p[i])
+        {
+            mx = i + p[i];
+            id = i;
+        }
+        if (resMx < p[i])
+        {
+            resMx = p[i];
+            resId = i;
+        }
+    }
+    int start = (resId - resMx) / 2;
+    int end = start + resMx - 1;
+    vector<int> palindrome;
+    palindrome.push_back(start);
+    palindrome.push_back(end);
+    return palindrome;
+}
+
 // function longest substring of two strings
 string longestSubstring(string text1, string text2)
 {
@@ -145,30 +185,12 @@ int main()
     string malicious2 = "mcode2.txt";
     string malicious3 = "mcode3.txt";
 
-    // string example = "test.txt";
-    // string example2 = "test2.txt";
-    // string example3 = "test3.txt";
 
     string text = readFile(fileName);
     string text2 = readFile(fileName2);
     string code1 = readFile(malicious1);
     string code2 = readFile(malicious2);
     string code3 = readFile(malicious3);
-
-    // string text2 = readFile(example);
-    // string text3 = readFile(example2);
-    // string text4 = readFile(example3);
-
-    // cout << text2 << endl;
-    // cout << text3 << endl;
-
-    // cout << text << endl;
-    cout << "==========================" << endl;
-    vector<int> vecPositions;
-    vector<int> vecPositions2;
-
-    // positionSubstring(text2, text3, vecPositions);
-    // printVector(vecPositions);
 
     int resultText1Code1 = isSubstring(text, code1);
     int resultText1Code2 = isSubstring(text, code2);
@@ -188,7 +210,7 @@ int main()
     }
     else
     {
-        cout << "true, start at position: " << resultText1Code1 << endl;
+        cout << "true, start at position " << resultText1Code1 << endl;
     }
     cout << "mcode2.txt - ";
     if (resultText1Code2 == -1)
@@ -197,7 +219,7 @@ int main()
     }
     else
     {
-        cout << "true, start at position: " << resultText1Code2 << endl;
+        cout << "true, start at position " << resultText1Code2 << endl;
     }
     cout << "mcode3.txt - ";
     if (resultText1Code3 == -1)
@@ -206,7 +228,7 @@ int main()
     }
     else
     {
-        cout << "true, start at position: " << resultText1Code3 << endl;
+        cout << "true, start at position " << resultText1Code3 << endl;
     }
     cout << endl;
     // transmission2.txt
@@ -218,7 +240,7 @@ int main()
     }
     else
     {
-        cout << "true, start at position: " << resultText2Code1 << endl;
+        cout << "true, start at position " << resultText2Code1 << endl;
     }
     cout << "mcode2.txt - ";
     if (resultText2Code2 == -1)
@@ -227,7 +249,7 @@ int main()
     }
     else
     {
-        cout << "true, start at position: " << resultText2Code2 << endl;
+        cout << "true, start at position " << resultText2Code2 << endl;
     }
     cout << "mcode3.txt - ";
     if (resultText2Code3 == -1)
@@ -236,7 +258,7 @@ int main()
     }
     else
     {
-        cout << "true, start at position: " << resultText2Code3 << endl;
+        cout << "true, start at position " << resultText2Code3 << endl;
     }
     cout << endl;
 
@@ -246,8 +268,19 @@ int main()
     vector<int> palindrome1 = findPalindrome(text);
     cout << "mirrored code found, start at " << palindrome1[0] << " ended at " << palindrome1[1] << endl;
     vector<int> palindrome2 = findPalindrome(text2);
+    cout << endl;
     cout << "transmission2.txt: " << endl;
     cout << "mirrored code found, start at " << palindrome2[0] << " ended at " << palindrome2[1] << endl;
+    cout << endl;
+    cout<<"==============================="<<endl;
+    system("pause");
+     cout << "transmission1.txt: " << endl;
+    vector<int> palindrome3 = findLongestPalindrome(text);
+    cout << "mirrored code found, start at " << palindrome3[0] << " ended at " << palindrome3[1] << endl;
+    vector<int> palindrome4 = findLongestPalindrome(text2);
+    cout << endl;
+    cout << "transmission2.txt: " << endl;
+    cout << "mirrored code found, start at " << palindrome4[0] << " ended at " << palindrome4[1] << endl;
     cout << endl;
     //======3rd part of the code======
     string longestSubstring1 = longestSubstring(text, text2);
