@@ -1,7 +1,6 @@
 // =========================================================
 // File: main.cpp
 // Authors:
-// Ariann Fernando A01703556
 // Jaime López Hernández A00571842
 //
 // Date: 21/ 09 / 2022
@@ -137,21 +136,6 @@ void printVector(vector<T> vec)
     cout << endl;
 }
 
-// // write file
-// void writeFile(string fileName, string text)
-// {
-//     ofstream out(fileName);
-//     if (out.is_open())
-//     {
-//         out << text;
-//         out.close();
-//     }
-//     else
-//     {
-//         cout << "Unable to open file";
-//     }
-// }
-
 int main()
 {
     string fileName = "transmission1.txt";
@@ -177,6 +161,7 @@ int main()
     ofstream solutionFile("mysolution.txt");
 
     // ======1st part of the code======
+
     // transmission 1.txt
     cout << "transmission1.txt: " << endl;
     solutionFile << "transmission1.txt: " << endl;
@@ -236,7 +221,9 @@ int main()
     solutionFile << "mirrored code found, start at " + to_string(palindrome4[0]) + " ended at " + to_string(palindrome4[1]) << endl;
     cout << endl;
     solutionFile << endl;
+
     //======3rd part of the code======
+
     string longestSubstring1 = longestSubstring(text, text2);
     cout << "the longest common substring between transmission1.txt and transmission2.txt is " << longestSubstring1.length() << " characters long" << endl;
     solutionFile << "the longest common substring between transmission1.txt and transmission2.txt is " + to_string(longestSubstring1.length()) + " characters long" << endl;
