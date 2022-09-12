@@ -53,44 +53,22 @@ int isSubstring(string text, string substring)
     }
 }
 
-// find palindrome in string
-vector<int> findPalindrome(string text)
-{
-    vector<int> palindrome;
-    int initialIndex = 0;
-    int finalIndex = 0;
-    int length = 0;
-    for (int i = 0; i < text.size(); i++)
-    {
-        for (int j = i + 1; j < text.size(); j++)
-        {
-            string substring = text.substr(i, j - i + 1);
-            string reverseSubstring = substring;
-            reverse(reverseSubstring.begin(), reverseSubstring.end());
-            if (substring == reverseSubstring)
-            {
-                if (substring.size() > length)
-                {
-                    length = substring.size();
-                    initialIndex = i;
-                    finalIndex = j;
-                }
-            }
-        }
-    }
-    palindrome.push_back(initialIndex);
-    palindrome.push_back(finalIndex + 1);
-    return palindrome;
-}
+// =========================================================
+// Function Name: findLongestPalindrome
+// @param: string
+// Time Complexity: O(n) tecnicamente este algoritmo consiste
+// en una complejidad temporal de O(2n) pero generalizando
+// un poco esto resulta en O(n).
+// =========================================================
 
 // function to find longest palindrome in string using Manacher's algorithm
 vector<int> findLongestPalindrome(string text)
 {
-    string s = "$#";
+    string s = "!|";
     for (int i = 0; i < text.size(); i++)
     {
         s += text[i];
-        s += "#";
+        s += "|";
     }
     vector<int> p(s.size(), 0);
     int id = 0;
@@ -115,6 +93,7 @@ vector<int> findLongestPalindrome(string text)
             resId = i;
         }
     }
+
     int start = (resId - resMx) / 2;
     int end = start + resMx - 1;
     vector<int> palindrome;
@@ -147,24 +126,6 @@ string longestSubstring(string text1, string text2)
     return longestSubstring;
 }
 
-// function to check is substring is in string
-void positionSubstring(string text, string substring, vector<int> &vec)
-{
-    for (int i = 0; text[i] != '\n'; i++)
-    {
-        for (int j = 0; substring[j] != '\n'; j++)
-        {
-            if (text[i + j] != substring[j])
-            {
-                break;
-            }
-            if (j == 1)
-            {
-                vec.push_back(i);
-            }
-        }
-    }
-}
 
 // function to print vector
 template <typename T>
@@ -185,7 +146,6 @@ int main()
     string malicious2 = "mcode2.txt";
     string malicious3 = "mcode3.txt";
 
-
     string text = readFile(fileName);
     string text2 = readFile(fileName2);
     string code1 = readFile(malicious1);
@@ -204,77 +164,25 @@ int main()
     // transmission 1.txt
     cout << "transmission1.txt: " << endl;
     cout << "mcode1.txt - ";
-    if (resultText1Code1 == -1)
-    {
-        cout << "false" << endl;
-    }
-    else
-    {
-        cout << "true, start at position " << resultText1Code1 << endl;
-    }
+    resultText1Code1 == -1 ? cout << "false" : cout << "true, start at position " << resultText1Code1 << endl;
     cout << "mcode2.txt - ";
-    if (resultText1Code2 == -1)
-    {
-        cout << "false" << endl;
-    }
-    else
-    {
-        cout << "true, start at position " << resultText1Code2 << endl;
-    }
+    resultText1Code2 == -1 ? cout << "false" : cout << "true, start at position " << resultText1Code2 << endl;
     cout << "mcode3.txt - ";
-    if (resultText1Code3 == -1)
-    {
-        cout << "false" << endl;
-    }
-    else
-    {
-        cout << "true, start at position " << resultText1Code3 << endl;
-    }
+    resultText1Code3 == -1 ? cout << "false" : cout << "true, start at position " << resultText1Code3 << endl;
     cout << endl;
     // transmission2.txt
     cout << "transmission2.txt: " << endl;
     cout << "mcode1.txt - ";
-    if (resultText2Code1 == -1)
-    {
-        cout << "false" << endl;
-    }
-    else
-    {
-        cout << "true, start at position " << resultText2Code1 << endl;
-    }
+    resultText2Code1 == -1 ? cout << "false" : cout << "true, start at position " << resultText2Code1 << endl;
     cout << "mcode2.txt - ";
-    if (resultText2Code2 == -1)
-    {
-        cout << "false" << endl;
-    }
-    else
-    {
-        cout << "true, start at position " << resultText2Code2 << endl;
-    }
+    resultText2Code2 == -1 ? cout << "false" : cout << "true, start at position " << resultText2Code2 << endl;
     cout << "mcode3.txt - ";
-    if (resultText2Code3 == -1)
-    {
-        cout << "false" << endl;
-    }
-    else
-    {
-        cout << "true, start at position " << resultText2Code3 << endl;
-    }
+    resultText2Code3 == -1 ? cout << "false" : cout << "true, start at position " << resultText2Code3 << endl;
     cout << endl;
 
     // ======2nd part of the code======
 
     cout << "transmission1.txt: " << endl;
-    vector<int> palindrome1 = findPalindrome(text);
-    cout << "mirrored code found, start at " << palindrome1[0] << " ended at " << palindrome1[1] << endl;
-    vector<int> palindrome2 = findPalindrome(text2);
-    cout << endl;
-    cout << "transmission2.txt: " << endl;
-    cout << "mirrored code found, start at " << palindrome2[0] << " ended at " << palindrome2[1] << endl;
-    cout << endl;
-    cout<<"==============================="<<endl;
-    system("pause");
-     cout << "transmission1.txt: " << endl;
     vector<int> palindrome3 = findLongestPalindrome(text);
     cout << "mirrored code found, start at " << palindrome3[0] << " ended at " << palindrome3[1] << endl;
     vector<int> palindrome4 = findLongestPalindrome(text2);
