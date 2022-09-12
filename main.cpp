@@ -53,6 +53,60 @@ int isSubstring(string text, string substring)
     }
 }
 
+// find palindrome in string
+vector<int> findPalindrome(string text)
+{
+    vector<int> palindrome;
+    int initialIndex = 0;
+    int finalIndex = 0;
+    int length = 0;
+    for (int i = 0; i < text.size(); i++)
+    {
+        for (int j = i + 1; j < text.size(); j++)
+        {
+            string substring = text.substr(i, j - i + 1);
+            string reverseSubstring = substring;
+            reverse(reverseSubstring.begin(), reverseSubstring.end());
+            if (substring == reverseSubstring)
+            {
+                if (substring.size() > length)
+                {
+                    length = substring.size();
+                    initialIndex = i;
+                    finalIndex = j;
+                }
+            }
+        }
+    }
+    palindrome.push_back(initialIndex);
+    palindrome.push_back(finalIndex + 1);
+    return palindrome;
+}
+
+// function longest substring of two strings
+string longestSubstring(string text1, string text2)
+{
+    string longestSubstring;
+    int length = 0;
+    for (int i = 0; i < text1.size(); i++)
+    {
+        for (int j = i + 1; j < text1.size(); j++)
+        {
+            string substring = text1.substr(i, j - i + 1);
+            int isSubstring = text2.find(substring);
+            if (isSubstring != string::npos)
+            {
+                if (substring.size() > length)
+                {
+                    length = substring.size();
+                    longestSubstring = substring;
+                }
+            }
+        }
+    }
+    return longestSubstring;
+}
+
 // function to check is substring is in string
 void positionSubstring(string text, string substring, vector<int> &vec)
 {
@@ -82,18 +136,6 @@ void printVector(vector<T> vec)
     }
     cout << endl;
 }
-// check if vector is empty
-bool isEmpty(vector<int> vec)
-{
-    if (vec.size() == 0)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 
 int main()
 {
@@ -103,9 +145,9 @@ int main()
     string malicious2 = "mcode2.txt";
     string malicious3 = "mcode3.txt";
 
-    string example = "test.txt";
-    string example2 = "test2.txt";
-    string example3 = "test3.txt";
+    // string example = "test.txt";
+    // string example2 = "test2.txt";
+    // string example3 = "test3.txt";
 
     string text = readFile(fileName);
     string text2 = readFile(fileName2);
@@ -136,6 +178,8 @@ int main()
     int resultText2Code2 = isSubstring(text2, code2);
     int resultText2Code3 = isSubstring(text2, code3);
 
+    // ======1st part of the code======
+    // transmission 1.txt
     cout << "transmission1.txt: " << endl;
     cout << "mcode1.txt - ";
     if (resultText1Code1 == -1)
@@ -165,7 +209,7 @@ int main()
         cout << "true, start at position: " << resultText1Code3 << endl;
     }
     cout << endl;
-    // print for transmission2.txt
+    // transmission2.txt
     cout << "transmission2.txt: " << endl;
     cout << "mcode1.txt - ";
     if (resultText2Code1 == -1)
@@ -194,15 +238,20 @@ int main()
     {
         cout << "true, start at position: " << resultText2Code3 << endl;
     }
+    cout << endl;
 
-    // cout<<"\t Malicious 1"<<endl;
-    // int index = isSubstring(text, malicious1);
-    // cout << text << endl;
-    // cout<<"\t Malicious 2"<<endl;
-    // index = isSubstring(text, malicious1);
-    // cout<<"\t Malicious 3"<<endl;
-    // cout << text << endl;
-    // index = isSubstring(text, malicious1);
+    // ======2nd part of the code======
+
+    cout << "transmission1.txt: " << endl;
+    vector<int> palindrome1 = findPalindrome(text);
+    cout << "mirrored code found, start at " << palindrome1[0] << " ended at " << palindrome1[1] << endl;
+    vector<int> palindrome2 = findPalindrome(text2);
+    cout << "transmission2.txt: " << endl;
+    cout << "mirrored code found, start at " << palindrome2[0] << " ended at " << palindrome2[1] << endl;
+    cout << endl;
+    //======3rd part of the code======
+    string longestSubstring1 = longestSubstring(text, text2);
+    cout << "the longest common substring between transmission1.txt and transmission2.txt is " << longestSubstring1.length() << " characters long" << endl;
 
     return 0;
 }
